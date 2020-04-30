@@ -1,0 +1,21 @@
+{
+  "name": "SyncTabs",
+  "version": "0.1",
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_title": "SyncTabs",
+    "default_icon": "icon.png"
+  },
+  "manifest_version": 2,
+  "options_page": "options.html"
+}
