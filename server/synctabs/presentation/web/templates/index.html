@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My tabs</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/vendor/normalize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/app.css') }}">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='/images/icon.png') }}">
+
+    {% if config.USE_PRODUCTION_ASSETS %}
+        <script src="{{ url_for('static', path='/vendor/vue/vue.min.js') }}"></script>
+        <link rel="stylesheet" type="text/css"
+              href="{{ url_for('static', path='/vendor/milligram/milligram.min.css') }}">
+    {% else %}
+        <script src="{{ url_for('static', path='/vendor/vue/vue.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/vendor/milligram/milligram.css') }}">
+    {% endif %}
+</head>
+<body>
+<div id="app">
+    {% raw %}
+    <div class="container">
+
+        <h1 class="page_head">My tabs</h1>
+
+        <div class="row">
+            <div class="column">
+                <ul>
+                    <li v-for="tab in view.tabs" class="link">
+                        <div class="link__favicon favicon">
+                            <img class="favicon__image" :src="tab.favIconUrl">
+                        </div>
+                        <a class="link__url" target="_blank" :href="tab.url">{{ tab.title }}</a>
+                    </li>
+                </ul>
+
+                <div class="meta">
+                    <template v-if="view.tabs">
+                        {{ view.tabs.length }} tab(s),
+                    </template>
+                    updated at: {{ new Date(view.updated_at).toLocaleString() }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endraw %}
+</div>
+
+<script>
+    var view = {{ view_json|safe }};
+    var websocketScheme = '{{ websocket_scheme }}';
+</script>
+<script src="{{ url_for('static', path='/js/app.js') }}"></script>
+</body>
+</html>
